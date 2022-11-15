@@ -1,5 +1,5 @@
 /******************************************************************************
-* File Name: LED_Control.h
+* File Name: led_control.h
 *
 * Description: This file contains all the function prototypes of LED control
 *              operation

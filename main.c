@@ -43,8 +43,8 @@
 /*******************************************************************************
  * Include header files
  ******************************************************************************/
-#include "CapSense_FSS_Algorithm.h"
-#include "LED_Control.h"
+#include "capsense_fss_algorithm.h"
+#include "led_control.h"
 #include "cy_pdl.h"
 #include "cybsp.h"
 #include "cycfg.h"
@@ -121,7 +121,7 @@ int main(void)
             Cy_CapSense_ProcessAllWidgets(&cy_capsense_context);
 
             /* Apply FSS algorithm */
-            CapSense_FSS();
+            capsense_fss();
 
             /* Turning LEDs ON/OFF based on button status */
             led_control();

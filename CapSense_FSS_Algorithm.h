@@ -1,5 +1,5 @@
 /******************************************************************************
-* File Name: CapSense_FSS_Algorithm.h
+* File Name: capsense_fss_algorithm.h
 *
 * Description: This file contains all the function prototypes of flanking
 *              sensor suppression (FSS) algorithm
@@ -48,7 +48,7 @@
 /*******************************************************************************
 * Function Prototypes
 *******************************************************************************/
-void CapSense_FSS(void);
+void capsense_fss(void);
 
 
 /* [] END OF FILE */

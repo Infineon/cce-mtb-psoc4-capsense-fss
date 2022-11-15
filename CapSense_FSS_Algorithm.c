@@ -1,5 +1,5 @@
 /******************************************************************************
-* File Name: CapSense_FSS_Algorithm.c
+* File Name: capsense_fss_algorithm.c
 *
 * Description: This is the source code for the flanking sensor suppression
 *              (FSS) algorithm
@@ -42,7 +42,7 @@
 /*******************************************************************************
  * Include header files
  ******************************************************************************/
-#include "CapSense_FSS_Algorithm.h"
+#include "capsense_fss_algorithm.h"
 
 /*******************************************************************************
 * Macros
@@ -65,10 +65,10 @@ uint8_t  sensorCount            = 0;
 /*******************************************************************************
 * Function Prototypes
 *******************************************************************************/
-static uint64_t FSS_Algorithm(uint64_t , uint64_t);
+static uint64_t fss_algorithm(uint64_t , uint64_t);
 
 /*******************************************************************************
-* Function Name: CapSense_FSS
+* Function Name: capsense_fss
 ********************************************************************************
 * Summary:
 *  This function applies the FSS algorithm on the button sensors. When
@@ -77,56 +77,56 @@ static uint64_t FSS_Algorithm(uint64_t , uint64_t);
 *  simultaneously, the sensor with a lower number is given priority.
 *
 *******************************************************************************/
-void CapSense_FSS(void)
+void capsense_fss(void)
 {
-	/* Clearing currentButtonStatus and sensorCount for the next iteration */
-	currentButtonStatus = 0;
-	sensorCount = 0;
+    /* Clearing currentButtonStatus and sensorCount for the next iteration */
+    currentButtonStatus = 0;
+    sensorCount = 0;
 
-	/* Extracting current button statuses and counting the total number of sensors */
-	for (uint8_t widget = 0; widget < CY_CAPSENSE_WIDGET_COUNT; widget++)
-	{
-		if (cy_capsense_context.ptrWdConfig[widget].wdType == CY_CAPSENSE_WD_BUTTON_E)
-		{
-			for (uint8_t sensor_iter = 0; sensor_iter < cy_capsense_context.ptrWdConfig[widget].numSns; sensor_iter++)
-			{
-				currentButtonStatus |= ( (cy_capsense_context.ptrWdConfig[widget].ptrSnsContext[sensor_iter].status &
-				                       CY_CAPSENSE_SNS_TOUCH_STATUS_MASK) << sensorCount);
-				sensorCount++;
-			}
-		}
-	}
+    /* Extracting current button statuses and counting the total number of sensors */
+    for (uint8_t widget = 0; widget < CY_CAPSENSE_WIDGET_COUNT; widget++)
+    {
+        if (cy_capsense_context.ptrWdConfig[widget].wdType == CY_CAPSENSE_WD_BUTTON_E)
+        {
+            for (uint8_t sensor_iter = 0; sensor_iter < cy_capsense_context.ptrWdConfig[widget].numSns; sensor_iter++)
+            {
+                currentButtonStatus |= ( (cy_capsense_context.ptrWdConfig[widget].ptrSnsContext[sensor_iter].status &
+                                       CY_CAPSENSE_SNS_TOUCH_STATUS_MASK) << sensorCount);
+                sensorCount++;
+            }
+        }
+    }
 
-	/* Applying FSS algorithm */
-	currentButtonStatus = FSS_Algorithm(currentButtonStatus,previousButtonStatus);
+    /* Applying FSS algorithm */
+    currentButtonStatus = FSS_Algorithm(currentButtonStatus,previousButtonStatus);
 
-	/* Storing the current button statuses in previousButtonStatus for the next iteration */
-	previousButtonStatus = currentButtonStatus;
+    /* Storing the current button statuses in previousButtonStatus for the next iteration */
+    previousButtonStatus = currentButtonStatus;
 
-	/* Updating the button statuses obtained after the application of FSS algorithm */
-	for (uint8_t widget = 0; widget < CY_CAPSENSE_WIDGET_COUNT; widget++)
-	{
-		if (cy_capsense_context.ptrWdConfig[widget].wdType == CY_CAPSENSE_WD_BUTTON_E)
-		{
-			for (uint8_t sensor_iter = 0; sensor_iter < cy_capsense_context.ptrWdConfig[widget].numSns; sensor_iter++)
-			{
-				cy_capsense_context.ptrWdConfig[widget].ptrSnsContext[sensor_iter].status &= (CURRENTBUTTONSTATUS_LSB_MASK &
-				                                                                             currentButtonStatus);
-				currentButtonStatus >>= RIGHT_SHIFT_1BIT;
-			}
-		}
-	}
+    /* Updating the button statuses obtained after the application of FSS algorithm */
+    for (uint8_t widget = 0; widget < CY_CAPSENSE_WIDGET_COUNT; widget++)
+    {
+        if (cy_capsense_context.ptrWdConfig[widget].wdType == CY_CAPSENSE_WD_BUTTON_E)
+        {
+            for (uint8_t sensor_iter = 0; sensor_iter < cy_capsense_context.ptrWdConfig[widget].numSns; sensor_iter++)
+            {
+                cy_capsense_context.ptrWdConfig[widget].ptrSnsContext[sensor_iter].status &= (CURRENTBUTTONSTATUS_LSB_MASK &
+                                                                                             currentButtonStatus);
+                currentButtonStatus >>= RIGHT_SHIFT_1BIT;
+            }
+        }
+    }
 }
 
 
 /*******************************************************************************
-* Function Name: FSS_Algorithm
+* Function Name: fss_algorithm
 ********************************************************************************
 * Summary:
 *  This function implements the FSS algorithm
 *
 *******************************************************************************/
-static uint64_t FSS_Algorithm(uint64_t currentButtonStatus, uint64_t previousButtonStatus)
+static uint64_t fss_algorithm(uint64_t currentButtonStatus, uint64_t previousButtonStatus)
 {
     uint64_t activeFssButtons;
     uint64_t reportedButtons;

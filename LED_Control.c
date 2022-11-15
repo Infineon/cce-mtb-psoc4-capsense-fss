@@ -1,5 +1,5 @@
 /******************************************************************************
-* File Name: LED_Control.c
+* File Name: led_control.c
 *
 * Description: This is the source code for controlling the status of LEDs
 *              based on the button status after the application of FSS
@@ -43,7 +43,7 @@
 /*******************************************************************************
  * Include header files
  ******************************************************************************/
-#include "LED_Control.h"
+#include "led_control.h"
 
 /*******************************************************************************
 * Function Name: led_control
@@ -55,7 +55,9 @@
 *******************************************************************************/
 void led_control(void)
 {
-    if(0 != Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID, CY_CAPSENSE_BUTTON0_SNS0_ID, &cy_capsense_context))
+    if(0 != Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID, 
+                                       CY_CAPSENSE_BUTTON0_SNS0_ID, 
+                                       &cy_capsense_context))
     {
         Cy_GPIO_Write(CYBSP_LED_BTN2_PORT, CYBSP_LED_BTN2_NUM, CYBSP_LED_STATE_ON);
     }
@@ -64,7 +66,9 @@ void led_control(void)
         Cy_GPIO_Write(CYBSP_LED_BTN2_PORT, CYBSP_LED_BTN2_NUM, CYBSP_LED_STATE_OFF);
     }
 
-    if(0 != Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID, CY_CAPSENSE_BUTTON0_SNS1_ID, &cy_capsense_context))
+    if(0 != Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID, 
+                                       CY_CAPSENSE_BUTTON0_SNS1_ID, 
+                                       &cy_capsense_context))
     {
         Cy_GPIO_Write(CYBSP_LED_BTN1_PORT, CYBSP_LED_BTN1_NUM, CYBSP_LED_STATE_ON);
     }
@@ -73,7 +77,9 @@ void led_control(void)
         Cy_GPIO_Write(CYBSP_LED_BTN1_PORT, CYBSP_LED_BTN1_NUM, CYBSP_LED_STATE_OFF);
     }
 
-    if(0 != Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON1_WDGT_ID, CY_CAPSENSE_BUTTON0_SNS0_ID, &cy_capsense_context))
+    if(0 != Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON1_WDGT_ID, 
+                                       CY_CAPSENSE_BUTTON0_SNS0_ID, 
+                                       &cy_capsense_context))
     {
         Cy_GPIO_Write(CYBSP_LED_BTN0_PORT, CYBSP_LED_BTN0_NUM, CYBSP_LED_STATE_ON);
     }
