@@ -73,8 +73,7 @@ static uint64_t fss_algorithm(uint64_t , uint64_t);
 * Summary:
 *  This function applies the FSS algorithm on the button sensors. When
 *  multiple sensors with FSS enabled are touched, the sensor which is touched
-*  first is given higher priority. When multiple sensors are touched 
-*  simultaneously, the sensor with a lower number is given priority.
+*  first is given higher priority.
 *
 *******************************************************************************/
 void capsense_fss(void)
