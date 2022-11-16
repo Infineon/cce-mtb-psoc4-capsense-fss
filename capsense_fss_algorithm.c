@@ -97,7 +97,7 @@ void capsense_fss(void)
     }
 
     /* Applying FSS algorithm */
-    currentButtonStatus = FSS_Algorithm(currentButtonStatus,previousButtonStatus);
+    currentButtonStatus = fss_algorithm(currentButtonStatus,previousButtonStatus);
 
     /* Storing the current button statuses in previousButtonStatus for the next iteration */
     previousButtonStatus = currentButtonStatus;
